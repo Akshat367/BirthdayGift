@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Password</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffd1dc;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            font-size: 24px;
+            color: #d63384;
+        }
+        input {
+            font-size: 18px;
+            padding: 10px;
+            width: 250px;
+            margin-top: 10px;
+            border: 2px solid #d63384;
+            border-radius: 5px;
+            text-align: center;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            background: #d63384;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        button:hover {
+            background: #b02a70;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Write your favorite person's name</h2>
+        <input type="text" id="passwordInput" placeholder="Enter name here">
+        <button onclick="checkPassword()">Submit</button>
+    </div>
+    
+    <script>
+        function checkPassword() {
+            const password = document.getElementById('passwordInput').value.trim().toLowerCase();
+            if (password === "akshita") {  
+                window.location.href = 'puzzle.html';
+            } else {
+                alert("Oops! Try again.");
+            }
+        }
+    </script>
+</body>
+</html>

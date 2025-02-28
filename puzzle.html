@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide Puzzle</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            color: #0c67ae;
+            position: relative;
+        }
+
+        #title {
+            height: 150px;
+            width: 400px;
+        }
+
+        #board {
+            width: 360px;
+            height: 360px;
+            background-color: lightblue;
+            border: 10px solid #0c67ae;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #board img {
+            width: 118px;
+            height: 118px;
+            border: 1px solid #0c67ae;
+        }
+
+        /* Popup Styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+
+        .popup h2 {
+            margin-bottom: 10px;
+        }
+
+        .popup button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #nextBtn {
+            background-color: green;
+            color: white;
+        }
+
+        #restartBtn {
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <img id="title" src="./logo.png">
+    <div id="board"></div>
+    <h1>Turns: <span id="turns">0</span></h1>
+
+    <!-- Success Popup -->
+    <div id="successPopup" class="popup">
+        <h2>Congratulations! 🎉</h2>
+        <p>You solved the puzzle in 8 or fewer turns!</p>
+        <button id="nextBtn" onclick="window.location.href='letter.html'">Next</button>
+    </div>
+
+    <!-- Failure Popup -->
+    <div id="failPopup" class="popup">
+        <h2>Try Again! ❌</h2>
+        <p>Solve the puzzle in 8 or fewer turns to proceed.</p>
+        <button id="restartBtn" onclick="window.location.reload()">Restart</button>
+    </div>
+
+    <script>
+        var rows = 3;
+        var columns = 3;
+        var currTile;
+        var otherTile;
+        var turns = 0;
+
+        var correctOrder = ["2", "1", "7", "3", "5", "8", "4", "6", "9"];
+        var imgOrder = ["4", "2", "8", "5", "1", "6", "7", "9", "3"];
+
+        window.onload = function() {
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < columns; c++) {
+                    let tile = document.createElement("img");
+                    tile.id = r.toString() + "-" + c.toString();
+                    tile.src = imgOrder.shift() + ".jpg";
+
+                    // Drag and touch functionality
+                    tile.addEventListener("dragstart", dragStart);
+                    tile.addEventListener("dragover", dragOver);
+                    tile.addEventListener("dragenter", dragEnter);
+                    tile.addEventListener("dragleave", dragLeave);
+                    tile.addEventListener("drop", dragDrop);
+                    tile.addEventListener("dragend", dragEnd);
+                    
+                    tile.addEventListener("touchstart", touchStart);
+                    tile.addEventListener("touchmove", touchMove);
+                    tile.addEventListener("touchend", touchEnd);
+                    
+                    document.getElementById("board").append(tile);
+                }
+            }
+        };
+
+        function dragStart() {
+            currTile = this;
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+        }
+
+        function dragEnter(e) {
+            e.preventDefault();
+        }
+
+        function dragLeave() {}
+
+        function dragDrop() {
+            otherTile = this;
+        }
+
+        function dragEnd() {
+            if (!otherTile) return;
+            swapTiles(currTile, otherTile);
+        }
+
+        function touchStart(e) {
+            currTile = e.target;
+        }
+
+        function touchMove(e) {
+            e.preventDefault();
+            let touch = e.touches[0];
+            let element = document.elementFromPoint(touch.clientX, touch.clientY);
+            if (element && element.tagName === "IMG") {
+                otherTile = element;
+            }
+        }
+
+        function touchEnd() {
+            if (!otherTile) return;
+            swapTiles(currTile, otherTile);
+        }
+
+        function swapTiles(tile1, tile2) {
+            let tempSrc = tile1.src;
+            tile1.src = tile2.src;
+            tile2.src = tempSrc;
+            turns += 1;
+            document.getElementById("turns").innerText = turns;
+            checkWinCondition();
+        }
+
+        function checkWinCondition() {
+            let currentTiles = [];
+            document.querySelectorAll("#board img").forEach(img => {
+                let filename = img.src.split('/').pop().replace(".jpg", "");
+                currentTiles.push(filename);
+            });
+
+            if (JSON.stringify(currentTiles) === JSON.stringify(correctOrder)) {
+                if (turns <= 8) {
+                    setTimeout(() => {
+                        document.getElementById("successPopup").style.display = "block";
+                    }, 4000); // Show popup after 4 seconds
+                } else {
+                    document.getElementById("failPopup").style.display = "block";
+                }
+            } else if (turns > 8) {
+                document.getElementById("failPopup").style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>

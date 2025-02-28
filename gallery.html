@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Gallery</title>
+    <style>
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+       body {
+            background: #ecf4fb;
+            text-align: center;
+            padding: 20px;
+        }
+       .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff4081;
+            margin-bottom: 20px;
+        }
+       .photo-gallery {
+            width: 90%;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            grid-gap: 15px;
+        }
+       .photo-gallery img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+       .photo-gallery img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logo">❤️ Love Gallery ❤️</div>
+
+    <div class="photo-gallery">
+        <a href="https://drive.google.com/file/d/1_KbMtQ1Qipdp8fl20vECc5dgGMCx4_rO/view?usp=drive_link" target="_blank">
+            <img src="21.avif" alt="Photo 1">
+        </a>
+        <a href="https://drive.google.com/file/d/1uATE9z2MfGeAAmLsC28s_ZMucoCAqmIE/view?usp=drive_link" target="_blank">
+            <img src="22.avif" alt="Photo 2">
+        </a>
+        <a href="https://drive.google.com/file/d/1IPXIaot6muUa2gHfaZC6gG7bAlz344hs/view?usp=drive_link" target="_blank">
+            <img src="23.avif" alt="Photo 3">
+        </a>
+        <a href="https://drive.google.com/file/d/17gAxVUe9wxnVlMoVWUpZuQ3suFv1yO8p/view?usp=drive_link" target="_blank">
+            <img src="24.avif" alt="Photo 4">
+        </a>
+        <a href="https://drive.google.com/file/d/17FT_0_e6ll90B2TknNZ0T3OtL3K_fZBm/view?usp=drive_link" target="_blank">
+            <img src="25.avif" alt="Photo 5">
+        </a>
+    </div>
+
+</body>
+</html>
